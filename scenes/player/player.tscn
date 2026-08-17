@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://djfdsbvq73ne4"]
+
+[ext_resource type="Script" uid="uid://brgupfxn1iaw" path="res://scenes/player/player.gd" id="1_8afob"]
+
+[sub_resource type="Animation" id="Animation_8afob"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x7p2l"]
+resource_name = "walk"
+length = 0.39999999999999997
+loop_mode = 1
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.00081855553, 0.099999994, 0.19999999, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(0, -2), Vector2(0, 0), Vector2(0, -2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.00081855553, 0.099999994, 0.19999999, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.20943952, 0.0, 0.20943952, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8afob"]
+_data = {
+&"RESET": SubResource("Animation_8afob"),
+&"walk": SubResource("Animation_x7p2l")
+}
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x7p2l"]
+load_path = "res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.ctex"
+
+[node name="Player" type="CharacterBody2D" unique_id=1363420704]
+script = ExtResource("1_8afob")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
+libraries/ = SubResource("AnimationLibrary_8afob")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1496906071]
+texture = SubResource("CompressedTexture2D_x7p2l")
+centered = false
+offset = Vector2(-2, -8)
