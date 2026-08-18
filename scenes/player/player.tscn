@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://djfdsbvq73ne4"]
 
 [ext_resource type="Script" uid="uid://brgupfxn1iaw" path="res://scenes/player/player.gd" id="1_8afob"]
+[ext_resource type="Texture2D" uid="uid://ceicdpsndjna8" path="res://dust0.png" id="2_dovo2"]
 
 [sub_resource type="Animation" id="Animation_8afob"]
 length = 0.001
@@ -31,32 +32,49 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_x7p2l"]
 resource_name = "walk"
-length = 0.39999999999999997
+length = 0.4
 loop_mode = 1
 step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.00081855553, 0.099999994, 0.19999999, 0.29999998),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(0, -2), Vector2(0, 0), Vector2(0, -2)]
+"values": [Vector2(-2, 0), Vector2(0, -2), Vector2(0, 0), Vector2(0, -2)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
+tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.00081855553, 0.099999994, 0.19999999, 0.29999998),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.0, -0.20943952, 0.0, 0.20943952, 0.0]
+"values": [-0.20943952, 0.0, 0.20943952, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}, {
+"args": [false],
+"method": &"restart"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8afob"]
@@ -64,6 +82,22 @@ _data = {
 &"RESET": SubResource("Animation_8afob"),
 &"walk": SubResource("Animation_x7p2l")
 }
+
+[sub_resource type="Curve" id="Curve_dovo2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dovo2"]
+curve = SubResource("Curve_dovo2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wcut5"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(0, 0, 0)
+scale_min = 0.59999996
+scale_max = 0.59999996
+scale_curve = SubResource("CurveTexture_dovo2")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x7p2l"]
 load_path = "res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.ctex"
@@ -73,6 +107,14 @@ script = ExtResource("1_8afob")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
 libraries/ = SubResource("AnimationLibrary_8afob")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1779271717]
+emitting = false
+amount = 1
+texture = ExtResource("2_dovo2")
+lifetime = 0.2
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_wcut5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1496906071]
 texture = SubResource("CompressedTexture2D_x7p2l")

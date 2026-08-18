@@ -9,14 +9,9 @@ extends CharacterBody2D
 
 func _physics_process(_delta: float) -> void:
 	var input_vector: Vector2 = Input.get_vector("left", "right", "up", "down")
-
 	if input_vector.length() > 0:
 		animation_player.play("walk")
-
-		if input_vector.x > 0:
-			sprite_2d.flip_h = false
-		else:
-			sprite_2d.flip_h = true
+		sprite_2d.flip_h = input_vector.x < 0
 	else:
 		animation_player.play("RESET")
 
