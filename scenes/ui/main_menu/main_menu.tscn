@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dblldxy3eygdu"]
+
+[ext_resource type="Script" uid="uid://l0ccvy6p80g2" path="res://scenes/ui/main_menu/main_menu.gd" id="1_1ch07"]
+
+[node name="MainMenu" type="Control" unique_id=1596249932]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1ch07")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2068330364]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.5
+offset_top = -15.5
+offset_right = 44.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="HBoxContainer" unique_id=1495622096]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="HBoxContainer" unique_id=51133976]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Join"

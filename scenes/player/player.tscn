@@ -194,9 +194,11 @@ load_path = "res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.cte
 script = ExtResource("1_8afob")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
+active = false
 libraries/ = SubResource("AnimationLibrary_8afob")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1559719903]
+active = false
 tree_root = SubResource("AnimationNodeBlendSpace1D_wcut5")
 anim_player = NodePath("../AnimationPlayer")
 parameters/blend_position = 0.0
