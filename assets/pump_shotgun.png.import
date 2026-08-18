@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpvfb1p5ga2jj"
-path="res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.ctex"
+uid="uid://yvcqdo0k20u3"
+path="res://.godot/imported/pump_shotgun.png-6416ad951b280580c89211242af5dbf1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bill.png"
-dest_files=["res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.ctex"]
+source_file="res://assets/pump_shotgun.png"
+dest_files=["res://.godot/imported/pump_shotgun.png-6416ad951b280580c89211242af5dbf1.ctex"]
 
 [params]
 
