@@ -2,13 +2,15 @@
 
 [ext_resource type="Script" uid="uid://brgupfxn1iaw" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Texture2D" uid="uid://ceicdpsndjna8" path="res://dust0.png" id="2_dovo2"]
+[ext_resource type="Texture2D" uid="uid://p78ofa05rpmr" path="res://bill_hand.png" id="3_gmlin"]
 
 [sub_resource type="Animation" id="Animation_8afob"]
-length = 0.001
+length = 0.39999999999999997
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Visuals/BodySprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -20,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Visuals/BodySprite2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -28,6 +30,42 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Hands/LeftHandSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, -3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visuals/Hands/RightHandSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -3)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visuals/Hands/RightHandSprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_x7p2l"]
@@ -38,7 +76,7 @@ step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Visuals/BodySprite2D:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +88,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Visuals/BodySprite2D:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -76,12 +114,62 @@ tracks/2/keys = {
 "method": &"restart"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visuals/Hands/LeftHandSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-7, -2), Vector2(-3, -5), Vector2(2, -2), Vector2(-3, -5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visuals/Hands/RightHandSprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.29999998),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2, -5), Vector2(3, -5), Vector2(-3, -4), Vector2(3, -5)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visuals/Hands/RightHandSprite2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.22, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8afob"]
 _data = {
 &"RESET": SubResource("Animation_8afob"),
 &"walk": SubResource("Animation_x7p2l")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gmlin"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lvxji"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_wcut5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_gmlin")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"RESET"
+blend_point_1/node = SubResource("AnimationNodeAnimation_lvxji")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"walk"
 
 [sub_resource type="Curve" id="Curve_dovo2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -108,6 +196,11 @@ script = ExtResource("1_8afob")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
 libraries/ = SubResource("AnimationLibrary_8afob")
 
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1559719903]
+tree_root = SubResource("AnimationNodeBlendSpace1D_wcut5")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_position = 0.0
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1779271717]
 emitting = false
 amount = 1
@@ -116,7 +209,21 @@ lifetime = 0.2
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_wcut5")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1496906071]
+[node name="Visuals" type="Node2D" parent="." unique_id=992239067]
+
+[node name="BodySprite2D" type="Sprite2D" parent="Visuals" unique_id=1496906071]
 texture = SubResource("CompressedTexture2D_x7p2l")
 centered = false
 offset = Vector2(-2, -8)
+
+[node name="Hands" type="Node2D" parent="Visuals" unique_id=143640187]
+
+[node name="LeftHandSprite2D" type="Sprite2D" parent="Visuals/Hands" unique_id=1410094599]
+position = Vector2(-3, -3)
+texture = ExtResource("3_gmlin")
+centered = false
+
+[node name="RightHandSprite2D" type="Sprite2D" parent="Visuals/Hands" unique_id=654067456]
+position = Vector2(3, -3)
+texture = ExtResource("3_gmlin")
+centered = false
