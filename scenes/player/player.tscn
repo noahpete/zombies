@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://brgupfxn1iaw" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Texture2D" uid="uid://ceicdpsndjna8" path="res://assets/dust0.png" id="2_dovo2"]
+[ext_resource type="PackedScene" uid="uid://dvaddrjne6ppf" path="res://scenes/components/player_input_synchronizer_component/player_input_synchronizer_component.tscn" id="2_lvxji"]
 [ext_resource type="Texture2D" uid="uid://p78ofa05rpmr" path="res://assets/bill_hand.png" id="3_gmlin"]
 
 [sub_resource type="Animation" id="Animation_8afob"]
@@ -190,8 +191,12 @@ scale_curve = SubResource("CurveTexture_dovo2")
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x7p2l"]
 load_path = "res://.godot/imported/bill.png-8a8d213787774584ada2bada04c13b5e.ctex"
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wcut5"]
+
 [node name="Player" type="CharacterBody2D" unique_id=1363420704]
 script = ExtResource("1_8afob")
+
+[node name="PlayerInputSynchronizerComponent" parent="." unique_id=1958831569 instance=ExtResource("2_lvxji")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
 active = false
@@ -229,3 +234,7 @@ centered = false
 position = Vector2(3, -3)
 texture = ExtResource("3_gmlin")
 centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833343556]
+shape = SubResource("CapsuleShape2D_wcut5")
+disabled = true
