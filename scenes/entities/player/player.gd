@@ -7,6 +7,7 @@ const BLEND_SPEED: float = 8.0
 @export var max_speed: float = 80.0
 
 @onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
+@onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visuals: Node2D = $Visuals
 @onready var weapon_root: Node2D = $WeaponRoot
@@ -47,11 +48,17 @@ func _multiplayer_authority_process() -> void:
 		return
 
 	if player_input_synchronizer_component.is_attack_pressed:
-		var bullet: Bullet = Bullet.create(
-			weapon_root.global_position,
-			player_input_synchronizer_component.aim_vector
-		)
-		get_parent().add_child(bullet, true)
+		_try_create_bullet()
 
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
+
+
+func _try_create_bullet() -> void:
+	if not fire_rate_timer.is_stopped():
+		return
+	var bullet: Bullet = Bullet.create(
+			weapon_root.global_position,
+			player_input_synchronizer_component.aim_vector
+		)
+	get_parent().add_child(bullet, true)

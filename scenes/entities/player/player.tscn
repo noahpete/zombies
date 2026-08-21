@@ -134,6 +134,10 @@ _aim_root = NodePath("../WeaponRoot")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=304615996]
 replication_config = SubResource("SceneReplicationConfig_lvxji")
 
+[node name="FireRateTimer" type="Timer" parent="." unique_id=694362843]
+wait_time = 0.25
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
 libraries/ = SubResource("AnimationLibrary_8afob")
 

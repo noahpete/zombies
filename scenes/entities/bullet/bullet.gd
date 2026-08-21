@@ -4,6 +4,8 @@ extends Node2D
 const SCENE = preload("uid://dqt2vor1gri6h")
 const SPEED: int = 800
 
+@onready var life_timer: Timer = $LifeTimer
+
 var _direction: Vector2
 
 
@@ -15,5 +17,19 @@ static func create(initial_global_position: Vector2, direction: Vector2) -> Bull
 	return bullet
 
 
+func _ready() -> void:
+	life_timer.timeout.connect(_on_life_timer_timeout)
+
+
 func _physics_process(delta: float) -> void:
 	global_position += _direction * SPEED * delta
+
+
+func _on_life_timer_timeout() -> void:
+	_despawn()
+
+
+func _despawn() -> void:
+	if not is_multiplayer_authority():
+		return
+	queue_free()
