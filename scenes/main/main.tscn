@@ -6,6 +6,7 @@
 script = ExtResource("1_iuonh")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=319979742]
+_spawnable_scenes = PackedStringArray("uid://dqt2vor1gri6h")
 spawn_path = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=526234008]

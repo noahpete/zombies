@@ -25,15 +25,6 @@ func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
-		var bullet: Bullet = Bullet.create(
-			weapon_root.global_position,
-			player_input_synchronizer_component.aim_vector
-		)
-		get_parent().add_child(bullet)
-
-
 func _process(delta: float) -> void:
 	var aim_position = weapon_root.global_position + player_input_synchronizer_component.aim_vector
 	weapon_root.look_at(aim_position)
@@ -54,5 +45,13 @@ func _process(delta: float) -> void:
 func _multiplayer_authority_process() -> void:
 	if not is_multiplayer_authority():
 		return
+
+	if player_input_synchronizer_component.is_attack_pressed:
+		var bullet: Bullet = Bullet.create(
+			weapon_root.global_position,
+			player_input_synchronizer_component.aim_vector
+		)
+		get_parent().add_child(bullet, true)
+
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
