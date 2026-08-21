@@ -1,7 +1,6 @@
 class_name Constants
 
 const MAIN_SCENE: PackedScene = preload("uid://dmmubmixwr8u")
-const PLAYER_SCENE: PackedScene = preload("uid://djfdsbvq73ne4")
 
 const HOST_ID: int = 1
 const PORT: int = 3000

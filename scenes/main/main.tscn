@@ -9,4 +9,4 @@ script = ExtResource("1_iuonh")
 spawn_path = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=526234008]
-zoom = Vector2(4, 4)
+zoom = Vector2(2, 2)

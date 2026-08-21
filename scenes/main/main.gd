@@ -7,11 +7,7 @@ extends Node
 func _ready() -> void:
 	multiplayer_spawner.spawn_function = func(data: Dictionary) -> Node:
 		Util.print_with_id("Instantiating Player with id=%s via multiplayer_spawner.spawn_function" % Util.format_peer_id(data.peer_id), multiplayer)
-		var player: Player = Constants.PLAYER_SCENE.instantiate()
-		player.name = str(data.peer_id)
-		player.input_multiplayer_authority = data.peer_id
-		return player
-
+		return Player.create(data.peer_id)
 	peer_ready.rpc_id(Constants.HOST_ID)
 
 
