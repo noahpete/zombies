@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const PLAYER_SCENE: PackedScene = preload("uid://djfdsbvq73ne4")
+const SCENE: PackedScene = preload("uid://djfdsbvq73ne4")
 const BLEND_SPEED: float = 8.0
 
 @export var max_speed: float = 80.0
@@ -15,7 +15,7 @@ var input_multiplayer_authority: int
 
 
 static func create(peer_id: int) -> Player:
-	var player: Player = PLAYER_SCENE.instantiate()
+	var player: Player = SCENE.instantiate()
 	player.name = str(peer_id)
 	player.input_multiplayer_authority = peer_id
 	return player
@@ -23,6 +23,15 @@ static func create(peer_id: int) -> Player:
 
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack"):
+		var bullet: Bullet = Bullet.create(
+			weapon_root.global_position,
+			player_input_synchronizer_component.aim_vector
+		)
+		get_parent().add_child(bullet)
 
 
 func _process(delta: float) -> void:
