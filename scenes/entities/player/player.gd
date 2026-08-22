@@ -13,7 +13,7 @@ var input_multiplayer_authority: int
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visuals: Node2D = $Visuals
-@onready var weapon_root: Node2D = $WeaponRoot
+@onready var weapon_root: Node2D = $Visuals/WeaponRoot
 
 
 static func create(peer_id: int) -> Player:
@@ -29,8 +29,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var aim_position = weapon_root.global_position + player_input_synchronizer_component.aim_vector
-	weapon_root.look_at(aim_position)
+	_update_aim_position()
 
 	var movement_vector: Vector2 = player_input_synchronizer_component.movement_vector
 
@@ -41,9 +40,6 @@ func _process(delta: float) -> void:
 		target_blend,
 		BLEND_SPEED * delta,
 	)
-
-	if movement_vector.x != 0:
-		visuals.scale.x = -1 if movement_vector.x < 0 else 1
 
 	_multiplayer_authority_process(delta)
 
@@ -57,6 +53,13 @@ func _multiplayer_authority_process(_delta: float) -> void:
 
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
+
+
+func _update_aim_position() -> void:
+	var aim_vector: Vector2 = player_input_synchronizer_component.aim_vector
+	var aim_position: Vector2 = weapon_root.global_position + aim_vector
+	visuals.scale.x = 1 if aim_vector.x >= 0 else -1
+	weapon_root.look_at(aim_position)
 
 
 func _on_died() -> void:
