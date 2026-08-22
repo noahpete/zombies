@@ -14,12 +14,12 @@ size = Vector2(400, 32)
 script = ExtResource("1_iuonh")
 
 [node name="EnemyManager" parent="." unique_id=1929653180 node_paths=PackedStringArray("enemy_spawn_root", "spawn_rectangle") instance=ExtResource("2_k2fmo")]
-enemy_spawn_root = NodePath("../World")
+enemy_spawn_root = NodePath("../World/YSortRoot")
 spawn_rectangle = NodePath("../SpawnRectangle")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=319979742]
 _spawnable_scenes = PackedStringArray("uid://dqt2vor1gri6h", "uid://cikajgwqagnfl")
-spawn_path = NodePath("../World")
+spawn_path = NodePath("../World/YSortRoot")
 
 [node name="World" type="Node2D" parent="." unique_id=365328731]
 
@@ -65,6 +65,9 @@ shape = SubResource("RectangleShape2D_iuonh")
 metadata/_edit_lock_ = true
 
 [node name="PlayerSpawn" type="Marker2D" parent="World" unique_id=256679483]
+
+[node name="YSortRoot" type="Node2D" parent="World" unique_id=1719353529]
+y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=526234008]
 zoom = Vector2(2, 2)
