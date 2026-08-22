@@ -9,11 +9,11 @@ const ENEMY_SPAWN_TIME_GROWTH: float = -0.15
 @export var enemy_spawn_root: Node
 @export var spawn_rectangle: ReferenceRect
 
-@onready var spawn_interval_timer: Timer = $SpawnIntervalTimer
-@onready var round_timer: Timer = $RoundTimer
-
 var _round_count: int = 0
 var _enemy_count: int = 0
+
+@onready var spawn_interval_timer: Timer = $SpawnIntervalTimer
+@onready var round_timer: Timer = $RoundTimer
 
 
 func _ready() -> void:
@@ -29,7 +29,7 @@ func start_round() -> void:
 	round_timer.start()
 
 	spawn_interval_timer.wait_time = BASE_ENEMY_SPAWN_TIME + \
-		(_round_count - 1) * ENEMY_SPAWN_TIME_GROWTH
+			(_round_count - 1) * ENEMY_SPAWN_TIME_GROWTH
 	spawn_interval_timer.start()
 
 	Log.info("Starting round %d" % _round_count, multiplayer)

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://daqlgn80kub4n" path="res://scenes/entities/walker/walker.gd" id="1_kn7m8"]
 [ext_resource type="Texture2D" uid="uid://c26wkuquuoenj" path="res://assets/walker0.png" id="1_ltol3"]
 [ext_resource type="PackedScene" uid="uid://qiuswm2e44bp" path="res://scenes/components/health_component/health_component.tscn" id="2_0cv3p"]
+[ext_resource type="PackedScene" uid="uid://blvdlc0hdmpy6" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="4_2lheu"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kn7m8"]
 properties/0/path = NodePath(".:global_position")
@@ -12,7 +13,7 @@ properties/0/replication_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_wcut5"]
 radius = 2.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wcut5"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lheu"]
 size = Vector2(7, 11)
 
 [node name="Walker" type="CharacterBody2D" unique_id=1047330246]
@@ -40,11 +41,10 @@ visible = false
 position = Vector2(1, -2)
 shape = SubResource("CircleShape2D_wcut5")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1598652572]
+[node name="HurtboxComponent" parent="." unique_id=457356280 node_paths=PackedStringArray("health_component") instance=ExtResource("4_2lheu")]
 visible = false
-collision_layer = 0
-collision_mask = 256
+health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2135628196]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2056273910]
 position = Vector2(0.5, -5.5)
-shape = SubResource("RectangleShape2D_wcut5")
+shape = SubResource("RectangleShape2D_2lheu")
