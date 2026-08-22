@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c26wkuquuoenj" path="res://assets/walker0.png" id="1_ltol3"]
 [ext_resource type="PackedScene" uid="uid://qiuswm2e44bp" path="res://scenes/components/health_component/health_component.tscn" id="2_0cv3p"]
 [ext_resource type="PackedScene" uid="uid://blvdlc0hdmpy6" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="4_2lheu"]
+[ext_resource type="PackedScene" uid="uid://cdtrntdmpoc3f" path="res://scenes/components/hitbox_component/hitbox_component.tscn" id="5_fr362"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kn7m8"]
 properties/0/path = NodePath(".:global_position")
@@ -15,6 +16,9 @@ radius = 2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lheu"]
 size = Vector2(7, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fr362"]
+size = Vector2(5, 8)
 
 [node name="Walker" type="CharacterBody2D" unique_id=1047330246]
 collision_layer = 0
@@ -48,3 +52,11 @@ health_component = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2056273910]
 position = Vector2(0.5, -5.5)
 shape = SubResource("RectangleShape2D_2lheu")
+
+[node name="HitboxComponent" parent="." unique_id=564332369 instance=ExtResource("5_fr362")]
+visible = false
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1553409054]
+position = Vector2(0.5, -6)
+shape = SubResource("RectangleShape2D_fr362")

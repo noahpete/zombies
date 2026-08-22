@@ -10,6 +10,7 @@ var input_multiplayer_authority: int
 
 @onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
 @onready var fire_rate_timer: Timer = $FireRateTimer
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visuals: Node2D = $Visuals
 @onready var weapon_root: Node2D = $WeaponRoot
@@ -24,6 +25,7 @@ static func create(peer_id: int) -> Player:
 
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
+	health_component.died.connect(_on_died)
 
 
 func _process(delta: float) -> void:
@@ -55,6 +57,10 @@ func _multiplayer_authority_process(_delta: float) -> void:
 
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
+
+
+func _on_died() -> void:
+	Log.info("Player died", multiplayer)
 
 
 func _try_create_bullet() -> void:
