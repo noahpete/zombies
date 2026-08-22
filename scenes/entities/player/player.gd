@@ -40,10 +40,10 @@ func _process(delta: float) -> void:
 	if movement_vector.x != 0:
 		visuals.scale.x = -1 if movement_vector.x < 0 else 1
 
-	_multiplayer_authority_process()
+	_multiplayer_authority_process(delta)
 
 
-func _multiplayer_authority_process() -> void:
+func _multiplayer_authority_process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 
