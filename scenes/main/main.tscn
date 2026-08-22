@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmmubmixwr8u"]
 
 [ext_resource type="Script" uid="uid://b4d71vs70tny8" path="res://scenes/main/main.gd" id="1_iuonh"]
-[ext_resource type="Texture2D" uid="uid://rakclwcqyvgf" path="res://assets/background.png" id="2_iuonh"]
+[ext_resource type="Texture2D" uid="uid://rakclwcqyvgf" path="res://assets/helipad.png" id="2_iuonh"]
 [ext_resource type="PackedScene" uid="uid://bag43dlp0dn6w" path="res://scenes/managers/enemy_manager/enemy_manager.tscn" id="2_k2fmo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wcut5"]
@@ -23,8 +23,8 @@ spawn_path = NodePath("../World/YSortRoot")
 
 [node name="World" type="Node2D" parent="." unique_id=365328731]
 
-[node name="Background" type="Sprite2D" parent="World" unique_id=774326454]
-scale = Vector2(0.8, 0.8)
+[node name="Arena" type="Sprite2D" parent="World" unique_id=774326454]
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_iuonh")
 centered = false
 offset = Vector2(-214, -120)
@@ -73,8 +73,8 @@ y_sort_enabled = true
 zoom = Vector2(2, 2)
 
 [node name="SpawnRectangle" type="ReferenceRect" parent="." unique_id=2001752095]
-offset_left = -130.0
-offset_top = -70.0
-offset_right = 130.0
-offset_bottom = 70.0
+offset_left = -98.0
+offset_top = -50.0
+offset_right = 98.0
+offset_bottom = 48.0
 mouse_filter = 2

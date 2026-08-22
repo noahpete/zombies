@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cvjyx5ql5m4j6"]
+
+[ext_resource type="Shader" uid="uid://dobyspagla57r" path="res://resources/background.gdshader" id="1_2gprg"]
+[ext_resource type="Texture2D" uid="uid://h7jghiq0ahf6" path="res://assets/background.png" id="2_qijbw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8t4i"]
+shader = ExtResource("1_2gprg")
+
+[node name="Background" type="Sprite2D" unique_id=205708079]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_e8t4i")
+position = Vector2(276, 99)
+rotation = -0.7853982
+texture = ExtResource("2_qijbw")
+region_enabled = true
+region_rect = Rect2(0, 0, 1200, 1200)
