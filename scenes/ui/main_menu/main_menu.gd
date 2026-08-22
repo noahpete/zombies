@@ -25,5 +25,5 @@ func _on_join_pressed() -> void:
 
 
 func _on_connected_to_server() -> void:
-	Util.print_with_id("_on_connected_to_server, changing to main.tscn", multiplayer)
+	Log.info("_on_connected_to_server, changing to main.tscn", multiplayer)
 	get_tree().change_scene_to_packed(Constants.MAIN_SCENE)

@@ -25,11 +25,10 @@ func _physics_process(delta: float) -> void:
 	global_position += _direction * SPEED * delta
 
 
-func _on_life_timer_timeout() -> void:
-	_despawn()
-
-
-func _despawn() -> void:
+func despawn() -> void:
 	if not is_multiplayer_authority():
 		return
 	queue_free()
+
+func _on_life_timer_timeout() -> void:
+	despawn()

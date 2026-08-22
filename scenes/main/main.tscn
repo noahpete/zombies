@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dmmubmixwr8u"]
 
 [ext_resource type="Script" uid="uid://b4d71vs70tny8" path="res://scenes/main/main.gd" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://cikajgwqagnfl" path="res://scenes/entities/walker/walker.tscn" id="2_iuonh"]
 
 [node name="Main" type="Node" unique_id=1753433228]
 script = ExtResource("1_iuonh")
@@ -11,3 +12,6 @@ spawn_path = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=526234008]
 zoom = Vector2(2, 2)
+
+[node name="Walker" parent="." unique_id=1047330246 instance=ExtResource("2_iuonh")]
+position = Vector2(81, 56)
