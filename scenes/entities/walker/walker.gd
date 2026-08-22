@@ -3,8 +3,9 @@ extends CharacterBody2D
 
 const SCENE: PackedScene = preload("uid://cikajgwqagnfl")
 
-@onready var area_2d: Area2D = $Area2D
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var target_timer: Timer = $TargetTimer
+@onready var area_2d: Area2D = $Area2D
 
 var current_health: int = 1
 var target_position: Vector2 = Vector2.ZERO
@@ -18,7 +19,10 @@ static func create() -> Walker:
 func _ready() -> void:
 	area_2d.area_entered.connect(_on_area_entered)
 	target_timer.timeout.connect(_on_target_timer_timeout)
-	_get_target()
+
+	if is_multiplayer_authority():
+		health_component.died.connect(_on_died)
+		_get_target()
 
 
 func _process(delta: float) -> void:
@@ -32,6 +36,7 @@ func _multiplayer_authority_process(_delta: float) -> void:
 	velocity = global_position.direction_to(target_position) * 100
 	move_and_slide()
 
+
 func _on_area_entered(other_area: Area2D) -> void:
 	if other_area.owner is Bullet:
 		_resolve_bullet_hit(other_area.owner)
@@ -39,6 +44,10 @@ func _on_area_entered(other_area: Area2D) -> void:
 
 func _on_target_timer_timeout() -> void:
 	_get_target()
+
+
+func _on_died() -> void:
+	queue_free()
 
 
 func _get_target() -> void:
@@ -71,6 +80,4 @@ func _resolve_bullet_hit(bullet: Bullet) -> void:
 
 	bullet.despawn()
 
-	current_health -= 1
-	if current_health <= 0:
-		queue_free()
+	health_component.damage(1)

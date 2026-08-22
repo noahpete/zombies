@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://daqlgn80kub4n" path="res://scenes/entities/walker/walker.gd" id="1_kn7m8"]
 [ext_resource type="Texture2D" uid="uid://c26wkuquuoenj" path="res://assets/walker0.png" id="1_ltol3"]
+[ext_resource type="PackedScene" uid="uid://qiuswm2e44bp" path="res://scenes/components/health_component/health_component.tscn" id="2_0cv3p"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kn7m8"]
 properties/0/path = NodePath(".:global_position")
@@ -25,6 +26,9 @@ replication_config = SubResource("SceneReplicationConfig_kn7m8")
 [node name="TargetTimer" type="Timer" parent="." unique_id=1957538713]
 wait_time = 0.1
 autostart = true
+
+[node name="HealthComponent" parent="." unique_id=837085478 instance=ExtResource("2_0cv3p")]
+max_health = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=211135651]
 texture = ExtResource("1_ltol3")
