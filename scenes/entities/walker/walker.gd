@@ -47,6 +47,7 @@ func _on_target_timer_timeout() -> void:
 
 
 func _on_died() -> void:
+	Events.emit_enemy_died()
 	queue_free()
 
 

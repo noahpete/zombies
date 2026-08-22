@@ -57,9 +57,7 @@ func _multiplayer_authority_process(_delta: float) -> void:
 func _try_create_bullet() -> void:
 	if not fire_rate_timer.is_stopped():
 		return
-	var bullet: Bullet = Bullet.create(
-			weapon_root.global_position,
-			player_input_synchronizer_component.aim_vector
-		)
+	var bullet: Bullet = Bullet.create(player_input_synchronizer_component.aim_vector)
+	bullet.global_position = weapon_root.global_position
 	get_parent().add_child(bullet, true)
 	fire_rate_timer.start()

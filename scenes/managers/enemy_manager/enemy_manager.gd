@@ -13,9 +13,11 @@ const ENEMY_SPAWN_TIME_GROWTH: float = -0.15
 @onready var round_timer: Timer = $RoundTimer
 
 var _round_count: int = 0
+var _enemy_count: int = 0
 
 
 func _ready() -> void:
+	Events.enemy_died.connect(_on_enemy_died)
 	spawn_interval_timer.timeout.connect(_on_spawn_timer_interval_timer_timeout)
 	round_timer.timeout.connect(_on_round_timer_timeout)
 	start_round()
@@ -30,6 +32,17 @@ func start_round() -> void:
 		(_round_count - 1) * ENEMY_SPAWN_TIME_GROWTH
 	spawn_interval_timer.start()
 
+	Log.info("Starting round %d" % _round_count, multiplayer)
+
+
+func check_round_completed() -> void:
+	if not round_timer.is_stopped():
+		return
+
+	if _enemy_count == 0:
+		Log.info("Round complete", multiplayer)
+		start_round()
+
 
 func spawn_walker() -> void:
 	if not is_multiplayer_authority():
@@ -38,6 +51,7 @@ func spawn_walker() -> void:
 	walker.global_position = _get_random_spawn_position()
 	Log.info("Adding Walker=%s to scene tree" % walker, multiplayer)
 	enemy_spawn_root.add_child(walker, true)
+	_enemy_count += 1
 
 
 func _on_spawn_timer_interval_timer_timeout() -> void:
@@ -48,6 +62,14 @@ func _on_spawn_timer_interval_timer_timeout() -> void:
 func _on_round_timer_timeout() -> void:
 	spawn_interval_timer.stop()
 	Log.info("Round over", multiplayer)
+
+	if is_multiplayer_authority():
+		check_round_completed()
+
+
+func _on_enemy_died() -> void:
+	_enemy_count -= 1
+	check_round_completed()
 
 
 func _get_random_spawn_position() -> Vector2:

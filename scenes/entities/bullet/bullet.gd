@@ -9,9 +9,8 @@ const SPEED: int = 800
 var _direction: Vector2
 
 
-static func create(initial_global_position: Vector2, direction: Vector2) -> Bullet:
+static func create(direction: Vector2) -> Bullet:
 	var bullet: Bullet = SCENE.instantiate()
-	bullet.global_position = initial_global_position
 	bullet.rotation = direction.angle()
 	bullet._direction = direction
 	return bullet
