@@ -1,17 +1,77 @@
 [gd_scene format=3 uid="uid://dmmubmixwr8u"]
 
 [ext_resource type="Script" uid="uid://b4d71vs70tny8" path="res://scenes/main/main.gd" id="1_iuonh"]
-[ext_resource type="PackedScene" uid="uid://cikajgwqagnfl" path="res://scenes/entities/walker/walker.tscn" id="2_iuonh"]
+[ext_resource type="Texture2D" uid="uid://rakclwcqyvgf" path="res://assets/background.png" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://bag43dlp0dn6w" path="res://scenes/managers/enemy_manager/enemy_manager.tscn" id="2_k2fmo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wcut5"]
+size = Vector2(32, 300)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iuonh"]
+size = Vector2(400, 32)
 
 [node name="Main" type="Node" unique_id=1753433228]
 script = ExtResource("1_iuonh")
 
+[node name="EnemyManager" parent="." unique_id=1929653180 node_paths=PackedStringArray("enemy_spawn_root", "spawn_rectangle") instance=ExtResource("2_k2fmo")]
+enemy_spawn_root = NodePath("../World")
+spawn_rectangle = NodePath("../SpawnRectangle")
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=319979742]
-_spawnable_scenes = PackedStringArray("uid://dqt2vor1gri6h")
-spawn_path = NodePath("..")
+_spawnable_scenes = PackedStringArray("uid://dqt2vor1gri6h", "uid://cikajgwqagnfl")
+spawn_path = NodePath("../World")
+
+[node name="World" type="Node2D" parent="." unique_id=365328731]
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=774326454]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_iuonh")
+centered = false
+offset = Vector2(-214, -120)
+
+[node name="StaticBodies" type="Node2D" parent="World" unique_id=2018540661]
+visible = false
+
+[node name="Left" type="StaticBody2D" parent="World/StaticBodies" unique_id=1421393783]
+position = Vector2(-162, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBodies/Left" unique_id=1890729424]
+shape = SubResource("RectangleShape2D_wcut5")
+metadata/_edit_lock_ = true
+
+[node name="Right" type="StaticBody2D" parent="World/StaticBodies" unique_id=1699963296]
+position = Vector2(165, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBodies/Right" unique_id=904434616]
+shape = SubResource("RectangleShape2D_wcut5")
+metadata/_edit_lock_ = true
+
+[node name="Top" type="StaticBody2D" parent="World/StaticBodies" unique_id=2021176979]
+position = Vector2(0, -98)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBodies/Top" unique_id=399638340]
+shape = SubResource("RectangleShape2D_iuonh")
+metadata/_edit_lock_ = true
+
+[node name="Bottom" type="StaticBody2D" parent="World/StaticBodies" unique_id=1498110573]
+position = Vector2(0, 93)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBodies/Bottom" unique_id=1286963000]
+shape = SubResource("RectangleShape2D_iuonh")
+metadata/_edit_lock_ = true
+
+[node name="PlayerSpawn" type="Marker2D" parent="World" unique_id=256679483]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=526234008]
 zoom = Vector2(2, 2)
 
-[node name="Walker" parent="." unique_id=1047330246 instance=ExtResource("2_iuonh")]
-position = Vector2(81, 56)
+[node name="SpawnRectangle" type="ReferenceRect" parent="." unique_id=2001752095]
+offset_left = -130.0
+offset_top = -70.0
+offset_right = 130.0
+offset_bottom = 70.0
+mouse_filter = 2

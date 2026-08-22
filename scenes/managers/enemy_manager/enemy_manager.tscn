@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bag43dlp0dn6w"]
+
+[ext_resource type="Script" uid="uid://coix8agvfb1b2" path="res://scenes/managers/enemy_manager/enemy_manager.gd" id="1_fm6jq"]
+
+[node name="EnemyManager" type="Node" unique_id=1929653180]
+script = ExtResource("1_fm6jq")
+
+[node name="SpawnIntervalTimer" type="Timer" parent="." unique_id=846385899]
+autostart = true

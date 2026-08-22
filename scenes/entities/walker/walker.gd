@@ -1,7 +1,16 @@
 class_name Walker
 extends CharacterBody2D
 
+const SCENE: PackedScene = preload("uid://cikajgwqagnfl")
+
 @onready var area_2d: Area2D = $Area2D
+
+var current_health: int = 1
+
+
+static func create() -> Walker:
+	var walker: Walker = SCENE.instantiate()
+	return walker
 
 
 func _ready() -> void:
@@ -16,4 +25,9 @@ func _on_area_entered(other_area: Area2D) -> void:
 func _resolve_bullet_hit(bullet: Bullet) -> void:
 	if not is_multiplayer_authority():
 		return
+
 	bullet.despawn()
+
+	current_health -= 1
+	if current_health <= 0:
+		queue_free()

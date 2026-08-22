@@ -62,3 +62,4 @@ func _try_create_bullet() -> void:
 			player_input_synchronizer_component.aim_vector
 		)
 	get_parent().add_child(bullet, true)
+	fire_rate_timer.start()

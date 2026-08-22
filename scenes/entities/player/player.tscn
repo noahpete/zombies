@@ -123,9 +123,12 @@ angle_max = 360.00003
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_dovo2")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wcut5"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kn7m8"]
+radius = 3.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1363420704]
+collision_layer = 0
+motion_mode = 1
 script = ExtResource("1_bjvvg")
 
 [node name="PlayerInputSynchronizerComponent" parent="." unique_id=1958831569 node_paths=PackedStringArray("_aim_root") instance=ExtResource("2_8akj5")]
@@ -135,7 +138,7 @@ _aim_root = NodePath("../WeaponRoot")
 replication_config = SubResource("SceneReplicationConfig_lvxji")
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=694362843]
-wait_time = 0.25
+wait_time = 0.12
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
@@ -171,5 +174,5 @@ offset = Vector2(-5, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833343556]
 visible = false
-shape = SubResource("CapsuleShape2D_wcut5")
-disabled = true
+position = Vector2(1, -3)
+shape = SubResource("CircleShape2D_kn7m8")
