@@ -8,14 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://y5csqdrd8ohp" path="res://assets/m16.png" id="5_5sj0x"]
 [ext_resource type="PackedScene" uid="uid://blvdlc0hdmpy6" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="7_bj7e2"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lvxji"]
-properties/0/path = NodePath(".:global_position")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath("Visuals:scale:x")
-properties/1/spawn = true
-properties/1/replication_mode = 2
-
 [sub_resource type="Animation" id="Animation_8afob"]
 length = 0.4
 step = 0.01
@@ -42,6 +34,59 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/WeaponRoot/WeaponAnimationRoot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visuals/WeaponRoot/WeaponAnimationRoot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bj7e2"]
+resource_name = "shoot"
+length = 0.12
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/WeaponRoot/WeaponAnimationRoot:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.6, 1.5), Vector2(1.25, 0.75), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/WeaponRoot/WeaponAnimationRoot:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.2617993877991494, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_x7p2l"]
@@ -94,22 +139,49 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8afob"]
 _data = {
 &"RESET": SubResource("Animation_8afob"),
+&"shoot": SubResource("Animation_bj7e2"),
 &"walk": SubResource("Animation_x7p2l")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gmlin"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bj7e2"]
 animation = &"RESET"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lvxji"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1murt"]
 animation = &"walk"
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_wcut5"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_gmlin")
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_5sj0x"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_bj7e2")
 blend_point_0/pos = 0.0
 blend_point_0/name = &"RESET"
-blend_point_1/node = SubResource("AnimationNodeAnimation_lvxji")
+blend_point_1/node = SubResource("AnimationNodeAnimation_1murt")
 blend_point_1/pos = 1.0
 blend_point_1/name = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5sj0x"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_1murt"]
+filter_enabled = true
+filters = ["Visuals/WeaponRoot/WeaponAnimationRoot:rotation", "Visuals/WeaponRoot/WeaponAnimationRoot:scale", "Visuals/WeaponRoot:rotation", "Visuals/WeaponRoot:scale"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bj7e2"]
+graph_offset = Vector2(-762.60864, 40.864746)
+nodes/output/position = Vector2(266.66666, 320)
+nodes/movement/node = SubResource("AnimationNodeBlendSpace1D_5sj0x")
+nodes/movement/position = Vector2(-413.33334, 173.33333)
+nodes/shoot_one_shot/node = SubResource("AnimationNodeOneShot_1murt")
+nodes/shoot_one_shot/position = Vector2(-66.666664, 226.66667)
+nodes/shoot_animation/node = SubResource("AnimationNodeAnimation_5sj0x")
+nodes/shoot_animation/position = Vector2(-413.33334, 386.66666)
+node_connections = [&"output", 0, &"shoot_one_shot", &"shoot_one_shot", 0, &"movement", &"shoot_one_shot", 1, &"shoot_animation"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lvxji"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Visuals:scale:x")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [sub_resource type="Curve" id="Curve_dovo2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -136,6 +208,17 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_bjvvg")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
+libraries/ = SubResource("AnimationLibrary_8afob")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1559719903]
+tree_root = SubResource("AnimationNodeBlendTree_bj7e2")
+anim_player = NodePath("../AnimationPlayer")
+parameters/movement/blend_position = 0.0
+parameters/shoot_one_shot/active = false
+parameters/shoot_one_shot/internal_active = false
+parameters/shoot_one_shot/request = 0
+
 [node name="PlayerInputSynchronizerComponent" parent="." unique_id=1958831569 node_paths=PackedStringArray("_aim_root") instance=ExtResource("2_8akj5")]
 _aim_root = NodePath("../Visuals/WeaponRoot")
 
@@ -147,14 +230,6 @@ wait_time = 0.12
 one_shot = true
 
 [node name="HealthComponent" parent="." unique_id=837085478 instance=ExtResource("3_8akj5")]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1448444038]
-libraries/ = SubResource("AnimationLibrary_8afob")
-
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1559719903]
-tree_root = SubResource("AnimationNodeBlendSpace1D_wcut5")
-anim_player = NodePath("../AnimationPlayer")
-parameters/blend_position = 0.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1779271717]
 emitting = false
@@ -174,10 +249,12 @@ offset = Vector2(-3, -12)
 [node name="WeaponRoot" type="Node2D" parent="Visuals" unique_id=166047572]
 position = Vector2(0, -4)
 
-[node name="Weapon" type="Sprite2D" parent="Visuals/WeaponRoot" unique_id=204071876]
+[node name="WeaponAnimationRoot" type="Node2D" parent="Visuals/WeaponRoot" unique_id=863677133]
+
+[node name="Weapon" type="Sprite2D" parent="Visuals/WeaponRoot/WeaponAnimationRoot" unique_id=110663421]
 texture = ExtResource("5_5sj0x")
 centered = false
-offset = Vector2(-5, -3)
+offset = Vector2(-4, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833343556]
 visible = false

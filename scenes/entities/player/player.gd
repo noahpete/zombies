@@ -12,6 +12,7 @@ var input_multiplayer_authority: int
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
 @onready var weapon_root: Node2D = $Visuals/WeaponRoot
 
@@ -34,8 +35,8 @@ func _process(delta: float) -> void:
 	var movement_vector: Vector2 = player_input_synchronizer_component.movement_vector
 
 	var target_blend: float = 1.0 if movement_vector.length() > 0.0 else 0.0
-	var current_blend: float = animation_tree["parameters/blend_position"]
-	animation_tree["parameters/blend_position"] = move_toward(
+	var current_blend: float = animation_tree["parameters/movement/blend_position"]
+	animation_tree["parameters/movement/blend_position"] = move_toward(
 		current_blend,
 		target_blend,
 		BLEND_SPEED * delta,
@@ -49,7 +50,7 @@ func _multiplayer_authority_process(_delta: float) -> void:
 		return
 
 	if player_input_synchronizer_component.is_attack_pressed:
-		_try_create_bullet()
+		_try_shoot()
 
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
@@ -66,10 +67,12 @@ func _on_died() -> void:
 	Log.info("Player died", multiplayer)
 
 
-func _try_create_bullet() -> void:
+func _try_shoot() -> void:
 	if not fire_rate_timer.is_stopped():
 		return
 	var bullet: Bullet = Bullet.create(player_input_synchronizer_component.aim_vector)
 	bullet.global_position = weapon_root.global_position
 	get_parent().add_child(bullet, true)
 	fire_rate_timer.start()
+
+	animation_tree["parameters/shoot_one_shot/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
