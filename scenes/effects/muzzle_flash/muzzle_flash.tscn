@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://d4g4xpd3v7q5"]
+
+[ext_resource type="Texture2D" uid="uid://d4eyk8oh4xh1" path="res://assets/particles.png" id="1_pr6bc"]
+[ext_resource type="Script" uid="uid://kxrtcq0i4s51" path="res://scenes/effects/muzzle_flash/muzzle_flash.gd" id="2_60hje"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wcut5"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_pr6bc"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.33333334, 0.6666667)
+colors = PackedColorArray(0.99607843, 0.90588236, 0.38039216, 1, 0.99607843, 0.68235296, 0.20392157, 1, 1, 1, 1, 1)
+metadata/_snap_count = 3
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_60hje"]
+gradient = SubResource("Gradient_pr6bc")
+
+[sub_resource type="Curve" id="Curve_60hje"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_pr6bc"]
+curve = SubResource("Curve_60hje")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_86vnj"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 10.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+damping_min = 900.00006
+damping_max = 900.00006
+scale_min = 0.19999999
+scale_max = 0.59999996
+scale_curve = SubResource("CurveTexture_pr6bc")
+color_initial_ramp = SubResource("GradientTexture1D_60hje")
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_60hje"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pr6bc"]
+resource_name = "default"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_60hje"]
+_data = {
+&"RESET": SubResource("Animation_60hje"),
+&"default": SubResource("Animation_pr6bc")
+}
+
+[node name="MuzzleFlash" type="GPUParticles2D" unique_id=1654560157]
+material = SubResource("CanvasItemMaterial_wcut5")
+emitting = false
+amount = 5
+texture = ExtResource("1_pr6bc")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.95
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_86vnj")
+script = ExtResource("2_60hje")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=724406202]
+libraries/ = SubResource("AnimationLibrary_60hje")
+autoplay = &"default"
