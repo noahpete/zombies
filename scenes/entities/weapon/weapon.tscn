@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://qotgk8p5idmu"]
 
-[ext_resource type="Texture2D" uid="uid://y5csqdrd8ohp" path="res://assets/m16.png" id="1_7dsmu"]
 [ext_resource type="Script" uid="uid://cr4u5r5ruqb6k" path="res://scenes/entities/weapon/weapon.gd" id="2_84rr3"]
 
 [sub_resource type="Animation" id="Animation_84rr3"]
@@ -65,14 +64,18 @@ _data = {
 &"shoot": SubResource("Animation_7dsmu")
 }
 
-[node name="Weapon" type="Sprite2D" unique_id=30186986]
-texture = ExtResource("1_7dsmu")
-centered = false
-offset = Vector2(-4, -3)
+[node name="Weapon" type="Node2D" unique_id=1045504012]
 script = ExtResource("2_84rr3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=42375850]
+root_node = NodePath("../Sprite2D")
 libraries/ = SubResource("AnimationLibrary_84rr3")
 
-[node name="MuzzlePosition" type="Marker2D" parent="." unique_id=1000725067]
-position = Vector2(12, 0)
+[node name="FireRateTimer" type="Timer" parent="." unique_id=1271659263]
+wait_time = 0.1
+one_shot = true
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=1000725067]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=30186986]
+centered = false

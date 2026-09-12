@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="WeaponResource" format=3 uid="uid://c7dmdbsn6eup0"]
+
+[ext_resource type="PackedScene" uid="uid://d4g4xpd3v7q5" path="res://scenes/effects/muzzle_flash/muzzle_flash.tscn" id="1_d6d17"]
+[ext_resource type="Script" uid="uid://cro0numosisqn" path="res://scripts/types/weapon_resource.gd" id="1_g62ma"]
+[ext_resource type="PackedScene" uid="uid://dqt2vor1gri6h" path="res://scenes/entities/bullet/bullet.tscn" id="2_ds4cf"]
+[ext_resource type="Texture2D" uid="uid://y5csqdrd8ohp" path="res://assets/m16.png" id="4_ds4cf"]
+
+[sub_resource type="Curve" id="Curve_g62ma"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[resource]
+script = ExtResource("1_g62ma")
+name = "M16"
+texture = ExtResource("4_ds4cf")
+texture_offset = Vector2(-4, -3)
+muzzle_position = Vector2(12, 0)
+ammo_type = 1
+ammo_per_mag = 50
+ammo_start_reserve = 360
+is_full_auto = true
+time_between_shots = 0.09
+projectile_scene = ExtResource("2_ds4cf")
+projectile_damage_falloff = SubResource("Curve_g62ma")
+muzzle_flash_scene = ExtResource("1_d6d17")
+metadata/_custom_type_script = "uid://cro0numosisqn"
