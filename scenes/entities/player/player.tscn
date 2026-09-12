@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://qiuswm2e44bp" path="res://scenes/components/health_component/health_component.tscn" id="3_8akj5"]
 [ext_resource type="Texture2D" uid="uid://ceicdpsndjna8" path="res://assets/dust0.png" id="3_bj7e2"]
 [ext_resource type="Texture2D" uid="uid://dpvfb1p5ga2jj" path="res://assets/bill.png" id="4_1murt"]
-[ext_resource type="Texture2D" uid="uid://y5csqdrd8ohp" path="res://assets/m16.png" id="5_5sj0x"]
+[ext_resource type="PackedScene" uid="uid://qotgk8p5idmu" path="res://scenes/entities/weapon/weapon.tscn" id="6_bj7e2"]
 [ext_resource type="PackedScene" uid="uid://blvdlc0hdmpy6" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="7_bj7e2"]
 
 [sub_resource type="Animation" id="Animation_8afob"]
@@ -63,6 +63,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_bj7e2"]
 resource_name = "shoot"
 length = 0.12
+loop_mode = 1
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -165,7 +166,6 @@ filter_enabled = true
 filters = ["Visuals/WeaponRoot/WeaponAnimationRoot:rotation", "Visuals/WeaponRoot/WeaponAnimationRoot:scale", "Visuals/WeaponRoot:rotation", "Visuals/WeaponRoot:scale"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bj7e2"]
-graph_offset = Vector2(-762.60864, 40.864746)
 nodes/output/position = Vector2(266.66666, 320)
 nodes/movement/node = SubResource("AnimationNodeBlendSpace1D_5sj0x")
 nodes/movement/position = Vector2(-413.33334, 173.33333)
@@ -252,14 +252,7 @@ position = Vector2(0, -4)
 
 [node name="WeaponAnimationRoot" type="Node2D" parent="Visuals/WeaponRoot" unique_id=863677133]
 
-[node name="Weapon" type="Sprite2D" parent="Visuals/WeaponRoot/WeaponAnimationRoot" unique_id=110663421]
-texture = ExtResource("5_5sj0x")
-centered = false
-offset = Vector2(-4, -3)
-
-[node name="MuzzlePosition" type="Marker2D" parent="Visuals/WeaponRoot/WeaponAnimationRoot" unique_id=1512001964]
-unique_name_in_owner = true
-position = Vector2(12, 0)
+[node name="Weapon" parent="Visuals/WeaponRoot/WeaponAnimationRoot" unique_id=30186986 instance=ExtResource("6_bj7e2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=833343556]
 visible = false

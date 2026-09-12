@@ -13,10 +13,9 @@ var input_multiplayer_authority: int
 @onready var fire_rate_timer: Timer = $FireRateTimer
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
 @onready var weapon_root: Node2D = $Visuals/WeaponRoot
-@onready var muzzle_position: Marker2D = %MuzzlePosition
+@onready var weapon: Weapon = $Visuals/WeaponRoot/WeaponAnimationRoot/Weapon
 
 
 static func create(peer_id: int) -> Player:
@@ -90,11 +89,10 @@ func _on_died() -> void:
 
 @rpc("authority", "call_local", "unreliable")
 func _play_shoot() -> void:
-	animation_tree["parameters/shoot_one_shot/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
-
+	weapon.play_animation("shoot")
 	var muzzle_flash: MuzzleFlash = MuzzleFlash.create(
-		muzzle_position.global_position,
-		muzzle_position.global_rotation,
+		weapon.muzzle_position.global_position,
+		weapon.muzzle_position.global_rotation,
 	)
 	get_parent().add_child(muzzle_flash)
 
@@ -105,7 +103,7 @@ func _try_shoot() -> void:
 	if not fire_rate_timer.is_stopped():
 		return
 	var bullet: Bullet = Bullet.create(player_input_synchronizer_component.aim_vector)
-	bullet.global_position = muzzle_position.global_position
+	bullet.global_position = weapon.muzzle_position.global_position
 	get_parent().add_child(bullet, true)
 	fire_rate_timer.start()
 	_play_shoot.rpc()
