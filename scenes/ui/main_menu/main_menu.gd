@@ -1,6 +1,8 @@
 class_name MainMenu
 extends Control
 
+const SCENE: PackedScene = preload("uid://dblldxy3eygdu")
+
 @onready var host_button: Button = %HostButton
 @onready var join_button: Button = %JoinButton
 
@@ -15,7 +17,7 @@ func _on_host_pressed() -> void:
 	var server_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 	server_peer.create_server(Constants.PORT)
 	multiplayer.multiplayer_peer = server_peer
-	get_tree().change_scene_to_packed(Constants.MAIN_SCENE)
+	get_tree().change_scene_to_packed(Main.SCENE)
 
 
 func _on_join_pressed() -> void:
@@ -26,4 +28,4 @@ func _on_join_pressed() -> void:
 
 func _on_connected_to_server() -> void:
 	Log.info("_on_connected_to_server, changing to main.tscn", multiplayer)
-	get_tree().change_scene_to_packed(Constants.MAIN_SCENE)
+	get_tree().change_scene_to_packed(Main.SCENE)

@@ -6,6 +6,7 @@ const BLEND_SPEED: float = 8.0
 
 @export var max_speed: float = 80.0
 
+var is_active: bool = true
 var input_multiplayer_authority: int
 
 @onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
@@ -27,7 +28,9 @@ static func create(peer_id: int) -> Player:
 
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
-	health_component.died.connect(_on_died)
+
+	if is_multiplayer_authority():
+		health_component.died.connect(_on_died)
 
 
 func _process(delta: float) -> void:
@@ -50,11 +53,22 @@ func _multiplayer_authority_process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 
+	if not is_active:
+		global_position = Vector2.RIGHT * 10e6
+		return
+
 	if player_input_synchronizer_component.is_attack_pressed:
 		_try_shoot()
 
 	velocity = player_input_synchronizer_component.movement_vector * max_speed
 	move_and_slide()
+
+
+func deactivate() -> void:
+	Log.info("Player %s die" % Log.format_peer_id(int(name)), multiplayer)
+	_deactivate_rpc.rpc()
+	await get_tree().create_timer(0.2).timeout
+	queue_free()
 
 
 func _update_aim_position() -> void:
@@ -64,8 +78,14 @@ func _update_aim_position() -> void:
 	weapon_root.look_at(aim_position)
 
 
+@rpc("authority", "call_local", "reliable")
+func _deactivate_rpc() -> void:
+	is_active = false
+	player_input_synchronizer_component.public_visibility = false
+
+
 func _on_died() -> void:
-	Log.info("Player died", multiplayer)
+	deactivate()
 
 
 @rpc("authority", "call_local", "unreliable")
