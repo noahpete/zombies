@@ -5,7 +5,7 @@ const SCENE: PackedScene = preload("uid://qotgk8p5idmu")
 const M_16: WeaponResource = preload("uid://c7dmdbsn6eup0")
 
 var resource: WeaponResource
-var spawn_node: Node
+var particle_root: Node
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var fire_rate_timer: Timer = $FireRateTimer
@@ -13,10 +13,10 @@ var spawn_node: Node
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 
-static func create(parent_node: Node) -> Weapon:
+static func create(particle_root_node: Node) -> Weapon:
 	var weapon: Weapon = SCENE.instantiate()
 	weapon.resource = M_16
-	weapon.spawn_node = parent_node
+	weapon.particle_root = particle_root_node
 	return weapon
 
 
@@ -34,7 +34,7 @@ func try_shoot(direction: Vector2) -> void:
 		return
 	var bullet: Bullet = Bullet.create(direction)
 	bullet.global_position = muzzle.global_position
-	spawn_node.add_child(bullet, true)
+	particle_root.add_child(bullet, true)
 	fire_rate_timer.start()
 	_play_shoot.rpc()
 
@@ -48,4 +48,4 @@ func _play_shoot() -> void:
 		muzzle.global_position,
 		muzzle.global_rotation,
 	)
-	spawn_node.add_child(muzzle_flash)
+	particle_root.add_child(muzzle_flash)

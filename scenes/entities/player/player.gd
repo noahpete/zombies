@@ -8,10 +8,10 @@ const BLEND_SPEED: float = 8.0
 
 var is_active: bool = true
 var input_multiplayer_authority: int
-var weapon: Weapon = null
 
 @onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var inventory_component: InventoryComponent = $InventoryComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visuals: Node2D = $Visuals
 @onready var weapon_root: Node2D = $Visuals/WeaponRoot
@@ -27,9 +27,9 @@ static func create(peer_id: int) -> Player:
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
 
-	# Temp --> equip()
-	weapon = Weapon.create(get_parent())
-	weapon_root.add_child(weapon)
+	# Equip weapon
+	inventory_component.primary_weapon = Weapon.create(get_parent())
+	weapon_root.add_child(inventory_component.primary_weapon)
 
 	if is_multiplayer_authority():
 		health_component.died.connect(_on_died)
@@ -58,6 +58,8 @@ func _multiplayer_authority_process(_delta: float) -> void:
 	if not is_active:
 		global_position = Vector2.RIGHT * 10e6
 		return
+
+	var weapon: Weapon = inventory_component.get_active_weapon()
 
 	if player_input_synchronizer_component.is_attack_pressed and weapon != null:
 		weapon.try_shoot(player_input_synchronizer_component.aim_vector)
@@ -88,13 +90,3 @@ func _deactivate_rpc() -> void:
 
 func _on_died() -> void:
 	deactivate()
-
-
-@rpc("authority", "call_local", "unreliable")
-func _play_shoot() -> void:
-	weapon.play_animation("shoot")
-	var muzzle_flash: MuzzleFlash = MuzzleFlash.create(
-		weapon.muzzle_position.global_position,
-		weapon.muzzle_position.global_rotation,
-	)
-	get_parent().add_child(muzzle_flash)
